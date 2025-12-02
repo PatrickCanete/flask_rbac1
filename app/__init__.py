@@ -13,14 +13,18 @@ def create_app():
     db.init_app(app)
     migrate.init_app(app, db)
 
-    # --- Create tables ---
+
     with app.app_context():
         db.create_all()
 
+   
     from .auth import bp as auth_bp
     from .routes import bp as main_bp
+    from .routes import admin as admin_bp  
 
+   
     app.register_blueprint(auth_bp)
     app.register_blueprint(main_bp)
+    app.register_blueprint(admin_bp)       
 
     return app

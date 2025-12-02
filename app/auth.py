@@ -4,6 +4,7 @@ from . import db
 
 bp = Blueprint("auth", __name__, url_prefix="/auth")
 
+
 @bp.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
@@ -40,7 +41,11 @@ def login():
         if user and user.check_password(password):
             session["user_id"] = user.id
             session["role"] = user.role
-            return redirect(url_for("main.dashboard"))
+
+            if user.role == "admin":
+                return redirect(url_for("admin.admin_dashboard"))
+            else:
+                return redirect(url_for("main.dashboard"))
 
         flash("Invalid email or password", "danger")
 

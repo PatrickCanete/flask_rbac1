@@ -2,10 +2,13 @@ from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 
+
 db = SQLAlchemy()
+
 
 class User(db.Model):
     __tablename__ = "users"
+
 
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(255), unique=True, nullable=False)
@@ -13,10 +16,21 @@ class User(db.Model):
     role = db.Column(db.String(50), default="user")
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
+
     def set_password(self, pw):
         self.password_hash = generate_password_hash(pw)
+
 
     def check_password(self, pw):
         return check_password_hash(self.password_hash, pw)
     def __repr__(self):
         return f"<Users {self.name}>"
+
+
+class Student(db.Model):
+    __tablename__ = "students"
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column (db.String(150), nullable=False)
+    email = db.Column (db.String(50), nullable=False)
+    course = db.Column (db.String(50), nullable=False)
