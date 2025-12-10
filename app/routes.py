@@ -28,7 +28,6 @@ def add_student():
         new_student = Student(name=name, email=email, course=course)
         db.session.add(new_student)
         db.session.commit()
-
         flash("Student added successfully!", "success")
         return redirect(url_for("admin.admin_dashboard"))
 
@@ -45,13 +44,9 @@ def edit_student(id):
         student.name = request.form["name"]
         student.email = request.form["email"]
         student.course = request.form["course"]
-
-
-
         db.session.commit()
         flash("Student updated successfully!", "success")
         return redirect(url_for("admin.admin_dashboard"))
-
     return render_template("admin/edit.html", student=student)
 
 
@@ -62,7 +57,6 @@ def delete_student(id):
     student = Student.query.get_or_404(id)
     db.session.delete(student)
     db.session.commit()
-
     flash("Student deleted successfully!", "success")
     return redirect(url_for("admin.admin_dashboard"))
 
@@ -76,7 +70,6 @@ def index():
 def dashboard():
     students = Student.query.all()
     return render_template("dashboard.html", students=students)
-
 admin = Blueprint("admin", __name__, url_prefix="/admin")
 
 @admin.route("/")
