@@ -81,6 +81,7 @@ admin = Blueprint("admin", __name__, url_prefix="/admin")
 
 @admin.route("/")
 @login_required
+@role_required("admin")
 def admin_dashboard():
     students = Student.query.all()
     return render_template("admin/index.html", students=students)
